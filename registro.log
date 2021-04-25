@@ -1,0 +1,23 @@
+2021-03-25 00:28:03,278 - registro_Log - INFO - Conexion exitosa a BDCOMPLEMENTOS.
+2021-03-25 00:28:03,284 - registro_Log - INFO - Empresas a Procesar=3.
+2021-03-25 00:28:46,120 - registro_Log - CRITICAL - Sin datos para libros impidieron descargar archivos, rut: 77113063-1
+2021-03-25 00:29:28,550 - registro_Log - INFO - Archivo Compra(RCV_COMPRA_REGISTRO_77147337-7_202103.csv) copiado a carpeta destino (D:\Users\RYANEZ\Documents\Madesal\descarga libro Compra_Venta\2021_Marzo\COMPRA/).
+2021-03-25 00:30:11,658 - registro_Log - INFO - Archivo Compra(RCV_COMPRA_REGISTRO_91860000-0_202103.csv) copiado a carpeta destino (D:\Users\RYANEZ\Documents\Madesal\descarga libro Compra_Venta\2021_Marzo\COMPRA/).
+2021-03-25 00:30:11,666 - registro_Log - INFO - Archivo Venta(RCV_VENTA_91860000-0_202103.csv) copiado a carpeta destino (D:\Users\RYANEZ\Documents\Madesal\descarga libro Compra_Venta\2021_Marzo\VENTA/).
+2021-03-25 00:30:11,666 - registro_Log - INFO - Proceso terminado! 2 Empresas Descargadas de 3.
+2021-03-25 00:37:36,823 - registro_Log - INFO - Conexion exitosa a BDCOMPLEMENTOS.
+2021-03-25 00:37:36,825 - registro_Log - INFO - Empresas a Procesar=3.
+2021-03-25 00:37:51,017 - registro_Log - CRITICAL - Errores en la pagina impidieron descargar archivos, rut: 77113063-1
+2021-03-25 00:38:31,237 - registro_Log - INFO - Archivo Compra(RCV_COMPRA_REGISTRO_77147337-7_202103.csv) copiado a carpeta destino (D:\Users\RYANEZ\Documents\Madesal\descarga libro Compra_Venta\2021_Marzo\COMPRA/).
+2021-03-25 00:39:12,542 - registro_Log - INFO - Archivo Compra(RCV_COMPRA_REGISTRO_91860000-0_202103.csv) copiado a carpeta destino (D:\Users\RYANEZ\Documents\Madesal\descarga libro Compra_Venta\2021_Marzo\COMPRA/).
+2021-03-25 00:39:12,549 - registro_Log - INFO - Archivo Venta(RCV_VENTA_91860000-0_202103.csv) copiado a carpeta destino (D:\Users\RYANEZ\Documents\Madesal\descarga libro Compra_Venta\2021_Marzo\VENTA/).
+2021-03-25 00:39:12,549 - registro_Log - INFO - Proceso terminado! 2 Empresas Descargadas de 3.
+2021-03-26 00:33:06,108 - registro_Log - INFO - Conexion exitosa a BDCOMPLEMENTOS.
+2021-03-26 00:33:06,113 - registro_Log - INFO - Empresas a Procesar=4.
+2021-03-26 00:33:48,815 - registro_Log - CRITICAL - Sin datos para libros impidieron descargar archivos, rut: 76179581-3
+
+2021-03-26 00:34:03,436 - registro_Log - CRITICAL - Errores en la pagina impidieron descargar archivos, rut: 77113063-1
+2021-03-26 00:34:44,164 - registro_Log - INFO - Archivo Compra(RCV_COMPRA_REGISTRO_77147337-7_202103.csv) copiado a carpeta destino (D:\Users\RYANEZ\Documents\Madesal\descarga libro Compra_Venta\2021_Marzo\COMPRA/).
+2021-03-26 00:35:29,150 - registro_Log - INFO - Archivo Compra(RCV_COMPRA_REGISTRO_91860000-0_202103.csv) copiado a carpeta destino (D:\Users\RYANEZ\Documents\Madesal\descarga libro Compra_Venta\2021_Marzo\COMPRA/).
+2021-03-26 00:35:29,172 - registro_Log - INFO - Archivo Venta(RCV_VENTA_91860000-0_202103.csv) copiado a carpeta destino (D:\Users\RYANEZ\Documents\Madesal\descarga libro Compra_Venta\2021_Marzo\VENTA/).
+2021-03-26 00:35:29,173 - registro_Log - INFO - Proceso terminado! 2 Empresas Descargadas de 4.
