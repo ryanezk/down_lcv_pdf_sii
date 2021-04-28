@@ -168,7 +168,7 @@ try:
             #quit()
 
             # Eliminar archivos descargados previamente
-            nomArchivosCompra = "RCV_COMPRA_REGISTRO_" + rut + "_" + str(agno) + str(mes).zfill(2) + "*.csv"
+            nomArchivosCompra = "RCV_COMPRA_*" + rut + "_" + str(agno) + str(mes).zfill(2) + "*.csv"
             ruta = rutacarpetadescarga + nomArchivosCompra
             # print(ruta)
             py_files = glob.glob(ruta)
@@ -177,7 +177,7 @@ try:
                     os.remove(py_file)
                 except OSError as e:
                     logger.critical(f"Error:{e.strerror}")
-            nomArchivosVenta = "RCV_VENTA_" + rut + "_" + str(agno) + str(mes).zfill(2) + "*.csv"
+            nomArchivosVenta = "RCV_VENTA_*" + rut + "_" + str(agno) + str(mes).zfill(2) + "*.csv"
             ruta = rutacarpetadescarga + nomArchivosVenta
             # print(ruta)
             py_files = glob.glob(ruta)
@@ -246,7 +246,8 @@ try:
                 else:
                     continuar= False
                 time.sleep(2)
-                comando="//a[contains(@href, 'https://www4.sii.cl/consdcvinternetui')]"
+                #comando="//a[contains(@href, 'https://www4.sii.cl/consdcvinternetui')]"
+                comando="//a[contains(.,'Ingresar al Registro de Compras y Ventas')]"
                 if continuar and check_exists_by_xpath(driver, comando):
                     vinculo = driver.find_element(By.XPATH, comando)
                     vinculo.click()
@@ -301,6 +302,17 @@ try:
                 else:
                     continuar= False
                 time.sleep(2)
+                #---- Pendientes compra
+                comando="//strong[contains(.,'Pendientes')]"
+                if check_exists_by_xpath(driver, comando):
+                    vinculo = driver.find_element(By.XPATH, comando)
+                    vinculo.click()
+                    time.sleep(2)
+                    comando="//button[contains(.,'Descargar Detalles')]"
+                    if continuar and check_exists_by_xpath(driver, comando):
+                        vinculo = driver.find_element(By.XPATH, comando)
+                        vinculo.click()
+                        time.sleep(2)
 
                 #comando="//strong[contains(.,'VENTA')]"
                 comando = ".nav-tabs > li:nth-child(2) strong"
@@ -319,6 +331,17 @@ try:
                 else:
                     continuar= False
                 time.sleep(2)
+                #---- Pendientes venta
+                comando="//strong[contains(.,'Pendientes')]"
+                if check_exists_by_xpath(driver, comando):
+                    vinculo = driver.find_element(By.XPATH, comando)
+                    vinculo.click()
+                    time.sleep(2)
+                    comando="//button[contains(.,'Descargar Detalles')]"
+                    if continuar and check_exists_by_xpath(driver, comando):
+                        vinculo = driver.find_element(By.XPATH, comando)
+                        vinculo.click()
+                        time.sleep(2)
 
                 comando="//a[contains(.,'Cerrar Sesión')]"
                 if check_exists_by_xpath(driver, comando):
