@@ -237,10 +237,15 @@ try:
         if rut_pdf=="":
             logger.info(f"Empresa {nomEmpresa} No tiene definido el rut del representante, NO se pueden descargar PDF Compra/Venta. Rut: {rut}")
         else:
-            for operacion in [1,2]:
+            for operacion in [1,2,3]:
                 try:
                     if (operacion ==1): 
                         nomArchivosCompra = "RCV_COMPRA_REGISTRO_" + rut + "_" + str(agno) + str(mes).zfill(2) + "*.csv"
+                        carpeta_destino_lc= carpeta_destino_lc + "COMPRA/"
+                        ruta = carpeta_destino_lc + nomArchivosCompra
+                        nombreOperacion= "COMPRA"
+                    elif (operacion ==2):
+                        nomArchivosCompra = "RCV_COMPRA_PENDIENTE_" + rut + "_" + str(agno) + str(mes).zfill(2) + "*.csv"
                         carpeta_destino_lc= carpeta_destino_lc + "COMPRA/"
                         ruta = carpeta_destino_lc + nomArchivosCompra
                         nombreOperacion= "COMPRA"
@@ -261,6 +266,8 @@ try:
                     if (nomArchivoCompra==""):
                         if (operacion ==1): 
                             logger.info(f"Empresa:{nomEmpresa},Rut:{rut},No se encontro archivo Libro Compra para procesar. Carpeta:{carpeta_destino_lc}, Rut:{rut}, Periodo: {ames}")
+                        elif (operacion ==2): 
+                            logger.info(f"Empresa:{nomEmpresa},Rut:{rut},No se encontro archivo Libro Compra Pendiente para procesar. Carpeta:{carpeta_destino_lc}, Rut:{rut}, Periodo: {ames}")
                         else:
                             logger.info(f"Empresa:{nomEmpresa},Rut:{rut},No se encontro archivo Libro Venta para procesar. Carpeta:{carpeta_destino_lv}, Rut:{rut}, Periodo: {ames}")
                     else:
@@ -270,6 +277,8 @@ try:
                         #print(f"ruta_paso:{ruta_paso}, Cant files:{str(len(pdf_files))}")
                         if (operacion ==1): 
                             logger.info(f"Empresa:{nomEmpresa},Rut:{rut}, Archivo Libro Compra:{nomArchivoCompra}")
+                        elif (operacion ==2): 
+                            logger.info(f"Empresa:{nomEmpresa},Rut:{rut}, Archivo Libro Compra Pendiente:{nomArchivoCompra}")
                         else:
                             logger.info(f"Empresa:{nomEmpresa},Rut:{rut}, Archivo Libro Venta:{nomArchivoCompra}")
                         try:
@@ -334,7 +343,7 @@ try:
                             else:
                                 continuar= False
                             time.sleep(2)
-                            if (operacion ==1):
+                            if (operacion ==1) or (operacion ==2):
                                 comando="//a[contains(.,'Ver documentos recibidos - Generar respuesta al emisor')]"
                             else:
                                 comando="//a[contains(.,'Ver documentos emitidos')]"
@@ -394,7 +403,7 @@ try:
                                         else:
                                             continuar= False
                                         time.sleep(1)
-                                        if (operacion==1):
+                                        if (operacion==1) or (operacion==2):
                                             comando="//input[@name='RUT_EMI']"
                                         else:
                                             comando="//input[@name='RUT_RECP']"
@@ -441,12 +450,12 @@ try:
                                             else:
                                                 continuar= False
                                             if (continuar==False):
-                                                if (operacion==1):
+                                                if (operacion==1) or (operacion==2):
                                                     logger.critical(f"Empresa:{nomEmpresa},Rut:{rut}, Prov.:{rut_prov} Folio:{folio} NO Encontrado!")
                                                 else:
                                                     logger.critical(f"Empresa:{nomEmpresa},Rut:{rut}, Cliente.:{rut_prov} Folio:{folio} NO Encontrado!")
                                             else:
-                                                if (operacion==1):
+                                                if (operacion==1) or (operacion==2):
                                                     time.sleep(1)
                                                     comando="//a[contains(.,'Otros detalles documento')]"
                                                     if continuar and check_exists_by_xpath(driver2, comando):
@@ -512,6 +521,8 @@ try:
                             error_string = str(e)
                             if (operacion ==1):
                                 logger.critical(f"Empresa:{nomEmpresa},Rut:{rut} ,Ocurrió un error en descarga pdf Compra:{error_string}") 
+                            elif (operacion ==2):
+                                logger.critical(f"Empresa:{nomEmpresa},Rut:{rut} ,Ocurrió un error en descarga pdf Compra Pendiente:{error_string}") 
                             else:
                                 logger.critical(f"Empresa:{nomEmpresa},Rut:{rut} ,Ocurrió un error en descarga pdf Venta:{error_string}") 
 
@@ -521,7 +532,7 @@ try:
                             time.sleep(2)
                 except Exception as e:
                     error_string = str(e)
-                    logger.critical(f"Empresa:{nomEmpresa},Rut:{rut} ,Ocurrió un error en descarga pdf compra/Venta:{error_string}")
+                    logger.critical(f"Empresa:{nomEmpresa},Rut:{rut} ,Ocurrió un error en descarga pdf Compra/Venta:{error_string}")
 except Exception as e:
     error_string = str(e)
     logger.critical(f"Empresa:{nomEmpresa},Rut:{rut} ,Ocurrió un error:{error_string}")
