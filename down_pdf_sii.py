@@ -241,18 +241,18 @@ try:
                 try:
                     if (operacion ==1): 
                         nomArchivosCompra = "RCV_COMPRA_REGISTRO_" + rut + "_" + str(agno) + str(mes).zfill(2) + "*.csv"
-                        carpeta_destino_lc= carpeta_destino_lc + "COMPRA/"
-                        ruta = carpeta_destino_lc + nomArchivosCompra
+                        #carpeta_destino_lc= carpeta_destino_lc + "COMPRA/"
+                        ruta = carpeta_destino_lc + "COMPRA/" + nomArchivosCompra
                         nombreOperacion= "COMPRA"
                     elif (operacion ==2):
                         nomArchivosCompra = "RCV_COMPRA_PENDIENTE_" + rut + "_" + str(agno) + str(mes).zfill(2) + "*.csv"
-                        carpeta_destino_lc= carpeta_destino_lc + "COMPRA/"
-                        ruta = carpeta_destino_lc + nomArchivosCompra
+                        #carpeta_destino_lc= carpeta_destino_lc + "COMPRA/"
+                        ruta = carpeta_destino_lc + "COMPRA/" + nomArchivosCompra
                         nombreOperacion= "COMPRA"
                     else:
                         nomArchivosCompra = "RCV_VENTA_" + rut + "_" + str(agno) + str(mes).zfill(2) + "*.csv"
-                        carpeta_destino_lv= carpeta_destino_lv + "VENTA/"
-                        ruta = carpeta_destino_lv + nomArchivosCompra
+                        #carpeta_destino_lv= carpeta_destino_lv + "VENTA/"
+                        ruta = carpeta_destino_lv + "VENTA/" + nomArchivosCompra
                         nombreOperacion= "VENTA"
                     nomArchivoCompra=""
                     py_files = glob.glob(ruta)
@@ -265,11 +265,11 @@ try:
                             logger.critical(f"Error:{e.strerror}")
                     if (nomArchivoCompra==""):
                         if (operacion ==1): 
-                            logger.info(f"Empresa:{nomEmpresa},Rut:{rut},No se encontro archivo Libro Compra para procesar. Carpeta:{carpeta_destino_lc}, Rut:{rut}, Periodo: {ames}")
+                            logger.info(f"Empresa:{nomEmpresa},Rut:{rut},No se encontro archivo Libro Compra para procesar. Ruta:{ruta}")
                         elif (operacion ==2): 
-                            logger.info(f"Empresa:{nomEmpresa},Rut:{rut},No se encontro archivo Libro Compra Pendiente para procesar. Carpeta:{carpeta_destino_lc}, Rut:{rut}, Periodo: {ames}")
+                            logger.info(f"Empresa:{nomEmpresa},Rut:{rut},No se encontro archivo Libro Compra Pendiente para procesar. Ruta:{ruta}")
                         else:
-                            logger.info(f"Empresa:{nomEmpresa},Rut:{rut},No se encontro archivo Libro Venta para procesar. Carpeta:{carpeta_destino_lv}, Rut:{rut}, Periodo: {ames}")
+                            logger.info(f"Empresa:{nomEmpresa},Rut:{rut},No se encontro archivo Libro Venta para procesar. Ruta:{ruta}")
                     else:
                         #Obtener lista de pdf. Para revisar y no descargar nuevamente.
                         ruta_paso= rutacarpetapdf + nombreOperacion + "/"+ nomEmpresa + "/"+ ames+"/*.pdf"                            
