@@ -5,6 +5,7 @@
     "githubPullRequests.remotes": [
         "origin",
         "upstream",
-        "main"
+        "main",
+        "down_lcv_pdf_sii"
     ]
 }
