@@ -31,34 +31,15 @@
   ('pyodbc',
    'c:\\program files\\python38\\lib\\site-packages\\pyodbc.cp38-win_amd64.pyd',
    'EXTENSION'),
-  ('libcrypto-1_1.dll',
-   'c:\\program files\\python38\\DLLs\\libcrypto-1_1.dll',
-   'BINARY'),
   ('libssl-1_1.dll',
    'c:\\program files\\python38\\DLLs\\libssl-1_1.dll',
+   'BINARY'),
+  ('libcrypto-1_1.dll',
+   'c:\\program files\\python38\\DLLs\\libcrypto-1_1.dll',
    'BINARY'),
   ('libffi-7.dll', 'c:\\program files\\python38\\DLLs\\libffi-7.dll', 'BINARY'),
   ('base_library.zip',
    'C:\\Users\\RYANEZ\\PycharmProjects\\selenium\\Demo\\build\\downlvc_sii\\base_library.zip',
-   'DATA'),
-  ('selenium\\webdriver\\firefox\\webdriver_prefs.json',
-   'c:\\program '
-   'files\\python38\\lib\\site-packages\\selenium\\webdriver\\firefox\\webdriver_prefs.json',
-   'DATA'),
-  ('selenium\\webdriver\\firefox\\x86\\x_ignore_nofocus.so',
-   'c:\\program '
-   'files\\python38\\lib\\site-packages\\selenium\\webdriver\\firefox\\x86\\x_ignore_nofocus.so',
-   'DATA'),
-  ('Include\\pyconfig.h',
-   'c:\\program files\\python38\\Include\\pyconfig.h',
-   'DATA'),
-  ('selenium\\webdriver\\firefox\\amd64\\x_ignore_nofocus.so',
-   'c:\\program '
-   'files\\python38\\lib\\site-packages\\selenium\\webdriver\\firefox\\amd64\\x_ignore_nofocus.so',
-   'DATA'),
-  ('selenium\\webdriver\\remote\\getAttribute.js',
-   'c:\\program '
-   'files\\python38\\lib\\site-packages\\selenium\\webdriver\\remote\\getAttribute.js',
    'DATA'),
   ('selenium\\webdriver\\remote\\isDisplayed.js',
    'c:\\program '
@@ -67,4 +48,23 @@
   ('selenium\\webdriver\\firefox\\webdriver.xpi',
    'c:\\program '
    'files\\python38\\lib\\site-packages\\selenium\\webdriver\\firefox\\webdriver.xpi',
+   'DATA'),
+  ('selenium\\webdriver\\remote\\getAttribute.js',
+   'c:\\program '
+   'files\\python38\\lib\\site-packages\\selenium\\webdriver\\remote\\getAttribute.js',
+   'DATA'),
+  ('Include\\pyconfig.h',
+   'c:\\program files\\python38\\Include\\pyconfig.h',
+   'DATA'),
+  ('selenium\\webdriver\\firefox\\amd64\\x_ignore_nofocus.so',
+   'c:\\program '
+   'files\\python38\\lib\\site-packages\\selenium\\webdriver\\firefox\\amd64\\x_ignore_nofocus.so',
+   'DATA'),
+  ('selenium\\webdriver\\firefox\\x86\\x_ignore_nofocus.so',
+   'c:\\program '
+   'files\\python38\\lib\\site-packages\\selenium\\webdriver\\firefox\\x86\\x_ignore_nofocus.so',
+   'DATA'),
+  ('selenium\\webdriver\\firefox\\webdriver_prefs.json',
+   'c:\\program '
+   'files\\python38\\lib\\site-packages\\selenium\\webdriver\\firefox\\webdriver_prefs.json',
    'DATA')],)
