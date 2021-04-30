@@ -21,6 +21,8 @@ import logging
 # pip install pytest-shutil
 import shutil
 import codecs
+from csv import DictReader
+import pandas as pd
 # pyinstaller downlvc_sii.py Comando para crear ejecutable
 
 def nombremes(i):
@@ -55,13 +57,25 @@ def check_exists_by_ccs(wdrive, ccspath):
         return False
     return True
 
-def copiar_csv(ArchivoOrigen, ArchivoDestino):
+def copiar_csv(ArchivoOrigen, ArchivoDestino,tipo):
+    titulo_tipo_compra=['Nro','Tipo Doc','Tipo Compra','RUT Proveedor','Razon Social','Folio','Fecha Docto','Fecha Recepcion','Fecha Acuse','Monto Exento','Monto Neto','Monto IVA Recuperable','Monto Iva No Recuperable','Codigo IVA No Rec.','Monto Total','Monto Neto Activo Fijo','IVA Activo Fijo','IVA uso Comun','Impto. Sin Derecho a Credito','IVA No Retenido','Tabacos Puros','Tabacos Cigarrillos','Tabacos Elaborados','NCE o NDE sobre Fact. de Compra','Codigo Otro Impuesto','Valor Otro Impuesto','Tasa Otro Impuesto']
+
     try:
-        f_paso= codecs.open(ArchivoOrigen, 'r', "utf-8")
-        contenido = f_paso.read().splitlines()
-        f2_paso = codecs.open(ArchivoDestino, 'w', "utf-8")
-        for line in contenido:
-            f2_paso.write(f'{line}\r\n')
+        if ((tipo=="COMPRA") or (tipo=="VENTA")):
+            f_paso= codecs.open(ArchivoOrigen, 'r', "utf-8")
+            contenido = f_paso.read().splitlines()
+            f2_paso = codecs.open(ArchivoDestino, 'w', "utf-8")
+            for line in contenido:
+                f2_paso.write(f'{line}\r\n')
+        else:
+
+            df= pd.read_csv(ArchivoOrigen,sep=';',index_col = False)            
+            rows_list = []
+            for row in df.itertuples(index=False):
+                dict1 = {'Nro':row[0],'Tipo Doc':row[1],'Tipo Compra'row[2],'RUT Proveedor':row[3],'Razon Social';row[4],'Folio':row[5],'Fecha Docto':row[6],'Fecha Recepcion':row[7],'Fecha Acuse':pd.nan,'Monto Exento':row[8],'Monto Neto':row[9],'Monto IVA Recuperable':row[10],'Monto Iva No Recuperable':row[11],'Codigo IVA No Rec.':row[12],'Monto Total'row[13],'Monto Neto Activo Fijo','IVA Activo Fijo','IVA uso Comun','Impto. Sin Derecho a Credito','IVA No Retenido','Tabacos Puros','Tabacos Cigarrillos','Tabacos Elaborados','NCE o NDE sobre Fact. de Compra','Codigo Otro Impuesto','Valor Otro Impuesto','Tasa Otro Impuesto'}                
+                rows_list.append(dict1)
+            pendiente = pd.DataFrame(data=rows_list, columns=titulo_tipo_compra)
+            pendiente.to_csv(ArchivoDestino, index=False, sep=';',line_terminator="rn")
     except Exception as e:
         error_string = str(e)
         return error_string
@@ -376,9 +390,9 @@ try:
                 try:
                     #os.remove(py_file)
                     nomArchivoDestino= path.basename(py_file)
-                    shutil.move(py_file, carpeta_destino_lc+nomArchivoDestino)
                     nomArchivo= carpeta_destino_lc+nomArchivoDestino                   
-                    logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo Compra({nomArchivoDestino}) copiado a carpeta destino ({carpeta_destino_lc}).")
+                    shutil.move(py_file, nomArchivo)
+                    logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo ({nomArchivoDestino}) copiado a carpeta destino ({carpeta_destino_lc}).")
                     
                     txt_paso= reemplaza_titulos_libro(nomArchivo)
                     if txt_paso != "":
@@ -409,10 +423,10 @@ try:
                     archivo_destino= carpeta_destino_lv + nomArchivoDestino
                     error_archivo= copiar_csv(py_file, archivo_destino)
                     if error_archivo !="":
-                        logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo Venta({nomArchivoDestino}) NO copiado. Error:{error_archivo}.")
+                        logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo ({nomArchivoDestino}) NO copiado. Error:{error_archivo}.")
                     else:    
                         #shutil.move(py_file, carpeta_destino_lv + nomArchivoDestino)
-                        logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo Venta({nomArchivoDestino}) copiado a carpeta destino ({carpeta_destino_lv}).")
+                        logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo ({nomArchivoDestino}) copiado a carpeta destino ({carpeta_destino_lv}).")
                         
                         txt_paso= reemplaza_titulos_libro(archivo_destino)
                         if txt_paso != "":
