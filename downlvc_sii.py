@@ -72,7 +72,7 @@ def copiar_csv(ArchivoOrigen, ArchivoDestino,tipo):
             df= pd.read_csv(ArchivoOrigen,sep=';',index_col = False)            
             rows_list = []
             for row in df.itertuples(index=False):
-                dict1 = {'Nro':row[0],'Tipo Doc':row[1],'Tipo Compra'row[2],'RUT Proveedor':row[3],'Razon Social';row[4],'Folio':row[5],'Fecha Docto':row[6],'Fecha Recepcion':row[7],'Fecha Acuse':pd.nan,'Monto Exento':row[8],'Monto Neto':row[9],'Monto IVA Recuperable':row[10],'Monto Iva No Recuperable':row[11],'Codigo IVA No Rec.':row[12],'Monto Total'row[13],'Monto Neto Activo Fijo','IVA Activo Fijo','IVA uso Comun','Impto. Sin Derecho a Credito','IVA No Retenido','Tabacos Puros','Tabacos Cigarrillos','Tabacos Elaborados','NCE o NDE sobre Fact. de Compra','Codigo Otro Impuesto','Valor Otro Impuesto','Tasa Otro Impuesto'}                
+                dict1 = {'Nro':row[0],'Tipo Doc':row[1],'Tipo Compra':row[2],'RUT Proveedor':row[3],'Razon Social';row[4],'Folio':row[5],'Fecha Docto':row[6],'Fecha Recepcion':row[7],'Fecha Acuse':pd.nan,'Monto Exento':row[8],'Monto Neto':row[9],'Monto IVA Recuperable':row[10],'Monto Iva No Recuperable':row[11],'Codigo IVA No Rec.':row[12],'Monto Total':row[13],'Monto Neto Activo Fijo':row[14],'IVA Activo Fijo':row[15],'IVA uso Comun':row[16],'Impto. Sin Derecho a Credito':row[17],'IVA No Retenido':row[18],'Tabacos Puros':pd.nan,'Tabacos Cigarrillos':pd.nan,'Tabacos Elaborados':pd.nan,'NCE o NDE sobre Fact. de Compra':row[19],'Codigo Otro Impuesto':row[20],'Valor Otro Impuesto':row[21],'Tasa Otro Impuesto':row[22]}                
                 rows_list.append(dict1)
             pendiente = pd.DataFrame(data=rows_list, columns=titulo_tipo_compra)
             pendiente.to_csv(ArchivoDestino, index=False, sep=';',line_terminator="rn")
@@ -390,10 +390,16 @@ try:
                 try:
                     #os.remove(py_file)
                     nomArchivoDestino= path.basename(py_file)
-                    nomArchivo= carpeta_destino_lc+nomArchivoDestino                   
-                    shutil.move(py_file, nomArchivo)
-                    logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo ({nomArchivoDestino}) copiado a carpeta destino ({carpeta_destino_lc}).")
-                    
+                    nomArchivo= carpeta_destino_lc+nomArchivoDestino                    
+                    if nomArchivo.find("_PENDIENTE_")>=0:
+                        error_archivo= copiar_csv(py_file, nomArchivo,'COMPRA_PENDIENTE')
+                        if error_archivo !="":
+                            logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo ({nomArchivoDestino}) NO copiado. Error:{error_archivo}.")
+                        else: 
+                            logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo ({nomArchivoDestino}) copiado a carpeta destino ({carpeta_destino_lc}).")
+                    else:
+                        shutil.move(py_file, nomArchivo) 
+                        logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo ({nomArchivoDestino}) copiado a carpeta destino ({carpeta_destino_lc}).")
                     txt_paso= reemplaza_titulos_libro(nomArchivo)
                     if txt_paso != "":
                         logger.critical(f"Empresa:{nomEmpresa}, Rut:{rut} Error:{txt_paso}")
@@ -421,7 +427,7 @@ try:
                     # os.remove(py_file)
                     nomArchivoDestino = path.basename(py_file)
                     archivo_destino= carpeta_destino_lv + nomArchivoDestino
-                    error_archivo= copiar_csv(py_file, archivo_destino)
+                    error_archivo= copiar_csv(py_file, archivo_destino,'VENTA')
                     if error_archivo !="":
                         logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo ({nomArchivoDestino}) NO copiado. Error:{error_archivo}.")
                     else:    
