@@ -23,6 +23,7 @@ import shutil
 import codecs
 from csv import DictReader
 import pandas as pd
+import numpy as np
 # pyinstaller downlvc_sii.py Comando para crear ejecutable
 
 def nombremes(i):
@@ -72,10 +73,10 @@ def copiar_csv(ArchivoOrigen, ArchivoDestino,tipo):
             df= pd.read_csv(ArchivoOrigen,sep=';',index_col = False)            
             rows_list = []
             for row in df.itertuples(index=False):
-                dict1 = {'Nro':row[0],'Tipo Doc':row[1],'Tipo Compra':row[2],'RUT Proveedor':row[3],'Razon Social';row[4],'Folio':row[5],'Fecha Docto':row[6],'Fecha Recepcion':row[7],'Fecha Acuse':pd.nan,'Monto Exento':row[8],'Monto Neto':row[9],'Monto IVA Recuperable':row[10],'Monto Iva No Recuperable':row[11],'Codigo IVA No Rec.':row[12],'Monto Total':row[13],'Monto Neto Activo Fijo':row[14],'IVA Activo Fijo':row[15],'IVA uso Comun':row[16],'Impto. Sin Derecho a Credito':row[17],'IVA No Retenido':row[18],'Tabacos Puros':pd.nan,'Tabacos Cigarrillos':pd.nan,'Tabacos Elaborados':pd.nan,'NCE o NDE sobre Fact. de Compra':row[19],'Codigo Otro Impuesto':row[20],'Valor Otro Impuesto':row[21],'Tasa Otro Impuesto':row[22]}                
+                dict1 = {'Nro':row[0],'Tipo Doc':row[1],'Tipo Compra':row[2],'RUT Proveedor':row[3],'Razon Social':row[4],'Folio':row[5],'Fecha Docto':row[6],'Fecha Recepcion':row[7],'Fecha Acuse':np.nan,'Monto Exento':row[8],'Monto Neto':row[9],'Monto IVA Recuperable':row[10],'Monto Iva No Recuperable':row[11],'Codigo IVA No Rec.':row[12],'Monto Total':row[13],'Monto Neto Activo Fijo':row[14],'IVA Activo Fijo':row[15],'IVA uso Comun':row[16],'Impto. Sin Derecho a Credito':row[17],'IVA No Retenido':row[18],'Tabacos Puros':np.nan,'Tabacos Cigarrillos':np.nan,'Tabacos Elaborados':np.nan,'NCE o NDE sobre Fact. de Compra':row[19],'Codigo Otro Impuesto':row[20],'Valor Otro Impuesto':row[21],'Tasa Otro Impuesto':row[22]}                
                 rows_list.append(dict1)
             pendiente = pd.DataFrame(data=rows_list, columns=titulo_tipo_compra)
-            pendiente.to_csv(ArchivoDestino, index=False, sep=';',line_terminator="rn")
+            pendiente.to_csv(ArchivoDestino, index=False, sep=';',line_terminator="\r\n")
     except Exception as e:
         error_string = str(e)
         return error_string
@@ -99,7 +100,7 @@ def reemplaza_titulos_libro(nombreArchivo):
 rut = '7967830-9'
 rutacarpetadescarga = "D:/Users/RYANEZ/Downloads/"
 hoy = datetime.now()
-mes = hoy.month
+mes = 4 #hoy.month
 nom_mes = nombremes(mes)
 agno = hoy.year
 ames= str(agno) + "_" + nom_mes
@@ -183,16 +184,8 @@ try:
 
             # Eliminar archivos descargados previamente
             nomArchivosCompra = "RCV_COMPRA_*" + rut + "_" + str(agno) + str(mes).zfill(2) + "*.csv"
-            ruta = rutacarpetadescarga + nomArchivosCompra
-            # print(ruta)
-            py_files = glob.glob(ruta)
-            for py_file in py_files:
-                try:
-                    os.remove(py_file)
-                except OSError as e:
-                    logger.critical(f"Error:{e.strerror}")
             nomArchivosVenta = "RCV_VENTA_*" + rut + "_" + str(agno) + str(mes).zfill(2) + "*.csv"
-            ruta = rutacarpetadescarga + nomArchivosVenta
+            ruta = rutacarpetadescarga + "*.*"
             # print(ruta)
             py_files = glob.glob(ruta)
             for py_file in py_files:
