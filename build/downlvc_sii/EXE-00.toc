@@ -28,6 +28,9 @@
   ('pyi_rth_multiprocessing',
    'C:\\Users\\RYANEZ\\AppData\\Roaming\\Python\\Python38\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_multiprocessing.py',
    'PYSOURCE'),
+  ('pyi_rth_pkgres',
+   'C:\\Users\\RYANEZ\\AppData\\Roaming\\Python\\Python38\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_pkgres.py',
+   'PYSOURCE'),
   ('downlvc_sii',
    'C:\\Users\\RYANEZ\\PycharmProjects\\selenium\\Demo\\downlvc_sii.py',
    'PYSOURCE'),
@@ -37,7 +40,7 @@
  [],
  False,
  False,
- 1619664667,
+ 1619932179,
  [('run.exe',
    'C:\\Users\\RYANEZ\\AppData\\Roaming\\Python\\Python38\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',
    'EXECUTABLE')])

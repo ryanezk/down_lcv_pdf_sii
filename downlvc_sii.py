@@ -386,6 +386,7 @@ try:
                     nomArchivo= carpeta_destino_lc+nomArchivoDestino                    
                     if nomArchivo.find("_PENDIENTE_")>=0:
                         error_archivo= copiar_csv(py_file, nomArchivo,'COMPRA_PENDIENTE')
+                        #shutil.move(py_file, nomArchivo) 
                         if error_archivo !="":
                             logger.info(f"Empresa:{nomEmpresa}, Rut:{rut} Archivo ({nomArchivoDestino}) NO copiado. Error:{error_archivo}.")
                         else: 

@@ -25,6 +25,17 @@ import shutil
 from csv import DictReader
 import pandas as pd
 
+
+def get_serial_number_of_physical_disk(drive_letter='C:'):
+    import wmi
+    
+    c = wmi.WMI()
+    logical_disk = c.Win32_LogicalDisk(Caption=drive_letter)[0]
+    partition = logical_disk.associators()[1]
+    physical_disc = partition.associators()[0]
+    return physical_disc.SerialNumber
+
+    
 def nombremes(i):
     switcher = {
         1: 'Enero',
