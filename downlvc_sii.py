@@ -100,7 +100,7 @@ def reemplaza_titulos_libro(nombreArchivo):
 rut = '7967830-9'
 rutacarpetadescarga = "D:/Users/RYANEZ/Downloads/"
 hoy = datetime.now()
-mes = 4 #hoy.month
+mes = hoy.month
 nom_mes = nombremes(mes)
 agno = hoy.year
 ames= str(agno) + "_" + nom_mes
@@ -148,10 +148,10 @@ except Exception as e:
 
 try:
     #with conexion.cursor() as cursor:
-        # En este caso no necesitamos limpiar ningún dato
-        cursor= conexion.cursor()
-        cursor.execute("SELECT [nombreEmpresa_emp],[login_SII_emp], [password_SII_emp],[ruta_destino_SII_LC_emp], [ruta_destino_SII_LC_emp] FROM [dbo].[EMPRESAS] WHERE [Descarga_Libros_SII_emp]='SI';")
-        # Con fetchall traemos todas las filas
+    # En este caso no necesitamos limpiar ningún dato
+    cursor= conexion.cursor()
+    cursor.execute("SELECT [nombreEmpresa_emp],[login_SII_emp], [password_SII_emp],[ruta_destino_SII_LC_emp], [ruta_destino_SII_LC_emp] FROM [dbo].[EMPRESAS] WHERE [Descarga_Libros_SII_emp]='SI';")
+    # Con fetchall traemos todas las filas
 except Exception as e:
     error_string = str(e)
     logger.critical(f"Ocurrió un error al consultar: {error_string}")
