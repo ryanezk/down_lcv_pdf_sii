@@ -316,27 +316,27 @@ try:
                     vinculo.click()
                     time.sleep(2)
                     comando="//button[contains(.,'Descargar Detalles')]"
-                    if continuar and check_exists_by_xpath(driver, comando):
+                    if check_exists_by_xpath(driver, comando):
                         vinculo = driver.find_element(By.XPATH, comando)
                         vinculo.click()
                         time.sleep(2)
 
                 #comando="//strong[contains(.,'VENTA')]"
                 comando = ".nav-tabs > li:nth-child(2) strong"
-                if continuar_venta and check_exists_by_ccs(driver, comando):
+                if check_exists_by_ccs(driver, comando):
                     #vinculo = driver.find_element(By.XPATH, comando)
                     vinculo= driver.find_element_by_css_selector(comando)
                     vinculo.click()
-                    continuar= True
+                    continuar_venta= True
                 else:
-                    continuar= False
+                    continuar_venta= False
                 time.sleep(2)
                 comando="//button[contains(.,'Descargar Detalles')]"
-                if continuar and check_exists_by_xpath(driver, comando):
+                if continuar_venta and check_exists_by_xpath(driver, comando):
                     vinculo = driver.find_element(By.XPATH, comando)
                     vinculo.click()
                 else:
-                    continuar= False
+                    continuar_venta= False
                 time.sleep(2)
                 #---- Pendientes venta
                 comando="//strong[contains(.,'Pendientes')]"
@@ -345,7 +345,7 @@ try:
                     vinculo.click()
                     time.sleep(2)
                     comando="//button[contains(.,'Descargar Detalles')]"
-                    if continuar and check_exists_by_xpath(driver, comando):
+                    if check_exists_by_xpath(driver, comando):
                         vinculo = driver.find_element(By.XPATH, comando)
                         vinculo.click()
                         time.sleep(2)
@@ -358,6 +358,7 @@ try:
                 error_string = str(e)
                 logger.critical(f"Empresa:{nomEmpresa}, Rut:{rut} ,Ocurrió un error:{error_string}")
                 continuar= False
+                continuar_venta=False
                 error_proceso= True
 
             time.sleep(2)
