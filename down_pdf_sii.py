@@ -25,6 +25,12 @@ import shutil
 from csv import DictReader
 import pandas as pd
 
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+
 
 def get_serial_number_of_physical_disk(drive_letter='C:'):
     import wmi
@@ -104,6 +110,7 @@ def delete_pdf_files(rutaarchivos):
         except OSError as e:
             logger.critical(f"Error:{e.strerror}")
 
+
 def mover_pdf_files(rutaorigen,carpeta_destino,subcarpeta, empresa, periodo_paso, nomArchivoDestino, rut_paso):
     carpeta_destino_paso= carpeta_destino+subcarpeta+'/'
     try:
@@ -143,6 +150,7 @@ rutacarpetadescarga = "D:/Users/RYANEZ/Downloads/"
 hoy = datetime.now()
 mes = hoy.month
 nom_mes = nombremes(mes)
+
 agno = hoy.year
 ames= str(agno) + "_" + nom_mes
 
@@ -165,6 +173,13 @@ rutaregistro= config.get('APPLICATION','PATH_REGISTRO')
 #rutacarpetapdf="D:\Users\RYANEZ\Documents\Madesal\descarga libro Compra_Venta\PDFS\COMPRA"
 rutacarpetapdf= ""
 
+sendmail_logpdf= config.get('EMAIL', 'SENDMAIL_LOGPDF')
+servermail_logpdf= config.get('EMAIL', 'SERVERMAIL')
+portmail_logpdf= config.get('EMAIL', 'PORTMAIL')
+usermail_logpdf= config.get('EMAIL', 'USERMAIL')
+passwordmail_logpdf= config.get('EMAIL', 'PASSWORDMAIL')
+destinationmail_logpdf= config.get('EMAIL', 'DESTINATIONMAIL')
+
 chrome_options = Options()
 chrome_options.add_experimental_option('prefs',  {
     "download.prompt_for_download": False,
@@ -175,10 +190,10 @@ chrome_options.add_experimental_option('prefs',  {
 )
 #    "plugins.plugins_disabled": ["Chrome PDF Viewer"], "download.default_directory": rutacarpetadescarga_pdf,
 
-ruta= rutaregistro +'Log_PDF_' +ames + "_" +str(hoy.day) + "_" + str(hoy.hour) + "_" + str(hoy.minute)
-logger = logging.getLogger(ruta)
+archivo_log= rutaregistro +'Log_PDF_' +ames + "_" +str(hoy.day) + "_" + str(hoy.hour) + "_" + str(hoy.minute)+".txt"
+logger = logging.getLogger(archivo_log)
 logger.setLevel(logging.DEBUG)
-fh = logging.FileHandler(ruta)
+fh = logging.FileHandler(archivo_log)
 fh.setLevel(logging.DEBUG)
 # logger.addHandler(fh)
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
@@ -550,6 +565,45 @@ except Exception as e:
 finally:
     conexion.close()
     logger.info(f"Proceso terminado! {cantempresas_descargadas} Empresas Descargadas de {cantempresas_base}.")
+    logger.close()
 
-
+    if (sendmail_logpdf=="YES") or (sendmail_logpdf=="SI"):
+        # Creamos el objeto mensaje
+        mensaje = MIMEMultipart()
+        
+        # Establecemos los atributos del mensaje
+        asunto="Descarga PDF Libros SII concluido, " + hoy.string()
+        cuerpo = "Se adjunta archivo log para su revision."
+        mensaje['From'] = usermail_logpdf
+        mensaje['To'] = destinationmail_logpdf
+        mensaje['Subject'] = asunto
+        # Agregamos el cuerpo del mensaje como objeto MIME de tipo texto
+        mensaje.attach(MIMEText(cuerpo, 'plain'))
+        
+        # Abrimos el archivo que vamos a adjuntar
+        archivo_adjunto = open(archivo_log, 'rb')
+        nombre_adjunto= path.basename(archivo_adjunto)
+        # Creamos un objeto MIME base
+        adjunto_MIME = MIMEBase('application', 'text/plain')
+        # Y le cargamos el archivo adjunto
+        adjunto_MIME.set_payload((archivo_adjunto).read())
+        # Codificamos el objeto en BASE64
+        encoders.encode_base64(adjunto_MIME)
+        # Agregamos una cabecera al objeto
+        adjunto_MIME.add_header('Content-Disposition', "attachment; filename= %s" % nombre_adjunto)
+        # Y finalmente lo agregamos al mensaje
+        mensaje.attach(adjunto_MIME)
+        
+        # Creamos la conexión con el servidor
+        sesion_smtp = smtplib.SMTP(servermail_logpdf, portmail_logpdf)
+        # Ciframos la conexión
+        sesion_smtp.starttls()
+        # Iniciamos sesión en el servidor
+        sesion_smtp.login(usermail_logpdf,passwordmail_logpdf)
+        # Convertimos el objeto mensaje a texto
+        texto = mensaje.as_string()
+        # Enviamos el mensaje
+        sesion_smtp.sendmail(usermail_logpdf, destinationmail_logpdf, texto)
+        # Cerramos la conexión
+        sesion_smtp.quit()
 
