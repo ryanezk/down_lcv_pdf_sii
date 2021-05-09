@@ -565,15 +565,15 @@ except Exception as e:
 finally:
     conexion.close()
     logger.info(f"Proceso terminado! {cantempresas_descargadas} Empresas Descargadas de {cantempresas_base}.")
-    logger.close()
+    logging.shutdown()
 
     if (sendmail_logpdf=="YES") or (sendmail_logpdf=="SI"):
         # Creamos el objeto mensaje
         mensaje = MIMEMultipart()
         
         # Establecemos los atributos del mensaje
-        asunto="Descarga PDF Libros SII concluido, " + hoy.string()
-        cuerpo = "Se adjunta archivo log para su revision."
+        asunto="Descarga PDF Libros SII concluido, " + hoy.strftime("%d/%m/%Y, %H:%M:%S")
+        cuerpo = "Se adjunta archivo log para su revision. Revise las linea con aviso 'Critical'."
         mensaje['From'] = usermail_logpdf
         mensaje['To'] = destinationmail_logpdf
         mensaje['Subject'] = asunto
@@ -582,7 +582,7 @@ finally:
         
         # Abrimos el archivo que vamos a adjuntar
         archivo_adjunto = open(archivo_log, 'rb')
-        nombre_adjunto= path.basename(archivo_adjunto)
+        nombre_adjunto= path.basename(archivo_log)
         # Creamos un objeto MIME base
         adjunto_MIME = MIMEBase('application', 'text/plain')
         # Y le cargamos el archivo adjunto
