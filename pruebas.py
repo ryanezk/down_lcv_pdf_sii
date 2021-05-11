@@ -111,6 +111,7 @@ if (sendmail_logpdf=="YES") or (sendmail_logpdf=="SI"):
     mensaje['Subject'] = asunto
     # Agregamos el cuerpo del mensaje como objeto MIME de tipo texto
     mensaje.attach(MIMEText(cuerpo, 'plain'))
+    print(f"Agregamos el cuerpo del mensaje!")
     
     # Abrimos el archivo que vamos a adjuntar
     archivo_adjunto = open(archivo_log, 'rb')
@@ -128,14 +129,23 @@ if (sendmail_logpdf=="YES") or (sendmail_logpdf=="SI"):
     
     # Creamos la conexión con el servidor
     sesion_smtp = smtplib.SMTP(servermail_logpdf, portmail_logpdf)
+    print(f"Creamos la conexión con el servidor!, ehlo:{sesion_smtp.ehlo()}")
     # Ciframos la conexión
+    sesion_smtp.ehlo()
     sesion_smtp.starttls()
+    sesion_smtp.ehlo()
+    print(f"Ciframos la conexión!, ehlo:{sesion_smtp.ehlo()}")
     # Iniciamos sesión en el servidor
     sesion_smtp.login(usermail_logpdf,passwordmail_logpdf)
+    print(f"Iniciamos sesión en el servidor, usermail_logpdf:{usermail_logpdf}, passwordmail_logpdf:{passwordmail_logpdf}!")
     # Convertimos el objeto mensaje a texto
     texto = mensaje.as_string()
+    print(f"Convertimos el objeto mensaje a texto!")
     # Enviamos el mensaje
-    sesion_smtp.sendmail(usermail_logpdf, destinationmail_logpdf, texto)
+    #sesion_smtp.sendmail(usermail_logpdf, destinationmail_logpdf, texto)
+    sesion_smtp.send_message(mensaje)
+    print(f"Enviamos el mensaje!, usermail_logpdf:{usermail_logpdf}, passwordmail_logpdf:{passwordmail_logpdf}")
     # Cerramos la conexión
     sesion_smtp.quit()
+    sesion_smtp.close()
 

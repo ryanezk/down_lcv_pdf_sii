@@ -603,7 +603,10 @@ finally:
         # Convertimos el objeto mensaje a texto
         texto = mensaje.as_string()
         # Enviamos el mensaje
-        sesion_smtp.sendmail(usermail_logpdf, destinationmail_logpdf, texto)
+        #sesion_smtp.sendmail(usermail_logpdf, destinationmail_logpdf, texto)
+        sesion_smtp.send_message(mensaje)
         # Cerramos la conexión
         sesion_smtp.quit()
+        sesion_smtp.close()
+        print(f"Correo Enviado!")
 
